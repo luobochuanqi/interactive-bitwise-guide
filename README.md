@@ -11,7 +11,7 @@
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Deploy](https://img.shields.io/badge/Deploy-GitHub_Actions-2088ff?logo=github-actions)](../../actions)
 
-![Hero Banner](./assets/images/bitwise_64x64.webp)
+![Hero Banner](./assets/images/bitwise_256x256.webp)
 
 [特性](#-核心特性) • [快速开始](#-快速开始) • [功能演示](#-功能演示) • [技术架构](#-技术架构) • [部署指南](#-部署指南)
 
