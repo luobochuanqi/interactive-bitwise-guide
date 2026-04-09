@@ -4,6 +4,7 @@ import tailwindcss from '@tailwindcss/vite'
 import path from 'path'
 
 export default defineConfig({
+  base: '/interactive-bitwise-guide/',  // GitHub Pages 子目录路径
   plugins: [vue(), tailwindcss()],
   resolve: {
     alias: {
