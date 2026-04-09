@@ -1,16 +1,17 @@
-# 🧩 Bitwise Logic HUD
+# 🧩 Interactive Bitwise Guide
 
 <div align="center">
 
-**交互式位运算可视化器 · 让二进制思维跃然屏上**
+**交互式位运算可视化器 · 探索二进制世界的奥秘**
 
 [![Vue 3](https://img.shields.io/badge/Vue_3-3.5+-42b883?logo=vue.js&logoColor=white)](https://vuejs.org/)
 [![Vite](https://img.shields.io/badge/Vite-5.0+-646cff?logo=vite&logoColor=white)](https://vitejs.dev/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-3178c6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.4+-38bdf8?logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Deploy](https://img.shields.io/badge/Deploy-GitHub_Actions-2088ff?logo=github-actions)](../../actions)
 
-![Hero Banner](../assets/images/demo.png)
+![Hero Banner](./assets/images/demo.png)
 
 [特性](#-核心特性) • [快速开始](#-快速开始) • [功能演示](#-功能演示) • [技术架构](#-技术架构) • [部署指南](#-部署指南)
 
@@ -20,7 +21,7 @@
 
 ## 📖 项目简介
 
-**Bitwise Logic HUD** 是一款专为计算机科学教育设计的**位运算可视化工具**。它将抽象的二进制运算转化为直观的动态视觉效果，帮助学生、教育者和开发者深入理解计算机底层运算机制。
+**Interactive Bitwise Guide** 是一款专为计算机科学教育设计的**位运算可视化工具**。它将抽象的二进制运算转化为直观的动态视觉效果，帮助学生、教育者和开发者深入理解计算机底层运算机制。
 
 ### 🎯 适用场景
 
@@ -71,8 +72,8 @@
 观看完整操作演示视频：
 
 <div align="center">
-  <video width="640" controls poster="../assets/images/demo.png">
-    <source src="../assets/videos/demo.mp4" type="video/mp4">
+  <video width="640" controls poster="./assets/images/demo.png">
+    <source src="./assets/videos/demo.mp4" type="video/mp4">
     您的浏览器不支持视频播放。
   </video>
   
@@ -81,7 +82,7 @@
 
 ### 界面预览
 
-![应用界面预览](../assets/images/demo.png)
+![应用界面预览](./assets/images/demo.png)
 
 *三栏式全景控制台布局：输入区 (25%) - 矩阵区 (50%) - 解析区 (25%)*
 
@@ -125,34 +126,47 @@ npm run preview  # 预览生产构建
 ## 📦 项目结构
 
 ```
-webapp/
-├── src/
-│   ├── components/          # Vue 组件
-│   │   ├── App.vue         # 主应用布局
-│   │   ├── SettingsPanel.vue    # API 配置面板
-│   │   ├── InputHub.vue         # 左侧输入区
-│   │   ├── BinaryMatrix.vue     # 中央二进制矩阵
-│   │   ├── CoTInterpreter.vue   # 思维链解析
-│   │   └── TheoryCards.vue      # 理论参考卡片
-│   ├── composables/         # Composition API 逻辑
-│   │   └── useBitwiseSession.ts  # 会话管理核心
-│   ├── services/            # API 服务
-│   │   └── api.ts          # AI 请求服务（带重试机制）
-│   ├── types/               # TypeScript 类型定义
-│   │   └── bitwise.ts      # 核心数据结构
-│   ├── i18n/                # 国际化配置
-│   │   └── locales/        # 语言包（en.json, zh.json）
-│   ├── data/                # Mock 数据
-│   │   └── mock.ts         # 离线演示数据
-│   └── lib/                 # 工具函数
-│       └── utils.ts        # 通用辅助函数
-├── assets/                  # 静态资源
-│   ├── images/             # 图片资源
-│   └── videos/             # 演示视频
-├── index.html              # HTML 入口
-├── package.json            # 项目配置
-├── vite.config.ts          # Vite 配置
-└── tsconfig.json           # TypeScript 配置
+interactive-bitwise-guide/
+├── README.md                # 项目文档
+├── assets/                  # 媒体资源（图片、视频）
+│   ├── images/
+│   │   └── demo.png        # 演示截图
+│   └── videos/
+│       └── demo.mp4        # 演示视频
+├── docs/                    # 项目文档
+│   └── demo-expressions.md  # 演示表达式大全
+└── webapp/                  # 应用源码
+    ├── src/
+    │   ├── components/      # Vue 组件
+    │   │   ├── App.vue         # 主应用布局
+    │   │   ├── SettingsPanel.vue    # API 配置面板
+    │   │   ├── InputHub.vue         # 左侧输入区
+    │   │   ├── BinaryMatrix.vue     # 中央二进制矩阵
+    │   │   ├── CoTInterpreter.vue   # 思维链解析
+    │   │   └── TheoryCards.vue      # 理论参考卡片
+    │   ├── composables/     # Composition API 逻辑
+    │   │   ├── useBitwiseSession.ts  # 会话管理核心
+    │   │   ├── useBitwiseEngine.ts   # 二进制引擎
+    │   │   └── useBitwiseAPI.ts      # API 请求封装
+    │   ├── services/        # API 服务
+    │   │   └── api.ts       # AI 请求服务（带重试机制）
+    │   ├── types/           # TypeScript 类型定义
+    │   │   └── bitwise.ts   # 核心数据结构
+    │   ├── i18n/            # 国际化配置
+    │   │   └── locales/     # 语言包
+    │   │       ├── en.json  # 英文
+    │   │       └── zh.json  # 中文
+    │   ├── data/            # Mock 数据
+    │   │   └── mock.ts      # 离线演示数据
+    │   ├── lib/             # 工具函数
+    │   │   └── utils.ts     # 通用辅助函数
+    │   ├── App.vue          # 根组件
+    │   └── main.ts          # 入口文件
+    ├── public/              # 静态资源
+    ├── index.html           # HTML 入口
+    ├── package.json         # 项目配置
+    ├── vite.config.ts       # Vite 配置
+    └── tsconfig.json        # TypeScript 配置
 ```
 
 ---
@@ -300,6 +314,34 @@ const result = await sendBitwiseRequest(
 ---
 
 ## 🚀 部署指南
+
+### 方案零：GitHub Pages（最简单 - 手动触发）
+
+本项目的 GitHub Actions 已配置好自动部署流程：
+
+1. **进入 Actions 页面**
+   - 访问：`https://github.com/luobochuanqi/interactive-bitwise-guide/actions`
+   
+2. **选择工作流**
+   - 点击左侧的 **"Deploy to GitHub Pages"**
+
+3. **运行工作流**
+   - 点击 **"Run workflow"** 按钮
+   - 选择环境（production 或 staging）
+   - 点击绿色的 **"Run workflow"** 按钮
+
+4. **等待部署完成**
+   - 大约 1-2 分钟后，状态变为 ✅
+   - 访问生成的 URL（通常在页面顶部显示）
+
+**配置说明：**
+- 触发方式：**手动触发**（`workflow_dispatch`）
+- 部署目录：`webapp/dist`
+- 环境选择：production / staging
+
+> 💡 **提示**：每次推送代码后，需要手动触发部署工作流。
+
+---
 
 ### 方案一：Vercel / Netlify（推荐）
 
@@ -477,8 +519,8 @@ MIT License - 详见 [LICENSE](LICENSE) 文件
 
 <div align="center">
 
-**Made with ❤️ by the Bitwise Logic HUD Team**
+**Made with ❤️ by the Interactive Bitwise Guide Team**
 
-[⭐ Star this repo](../../stargazers) • [🍴 Fork](../../fork) • [📢 Share](?share=bitwise-logic-hud)
+[⭐ Star this repo](../../stargazers) • [🍴 Fork](../../fork) • [📢 Share](?share=interactive-bitwise-guide)
 
 </div>
