@@ -67,18 +67,19 @@
 
 ## 🎬 功能演示
 
-### 视频演示
+### 🎬 视频演示
 
 观看完整操作演示视频：
 
 <div align="center">
-  <video width="640" controls poster="./assets/images/demo.png">
-    <source src="./assets/videos/demo.mp4" type="video/mp4">
-    您的浏览器不支持视频播放。
-  </video>
-  
-  *演示视频：位运算表达式 `x & -x` 的完整推演过程*
+
+![Demo Video](./assets/videos/demo.mp4)
+
+*演示视频：位运算表达式 `x & -x` 的完整推演过程*
+
 </div>
+
+> 💡 **提示**: 如果视频无法播放，请确保已登录 GitHub 账号，或尝试使用现代浏览器（Chrome/Firefox/Safari）。
 
 ### 界面预览
 
