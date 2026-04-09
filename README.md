@@ -73,13 +73,18 @@
 
 <div align="center">
 
-![Demo Video](./assets/videos/demo.mp4)
+<video width="640" controls preload="metadata">
+  <source src="https://raw.githubusercontent.com/luobochuanqi/interactive-bitwise-guide/main/assets/videos/demo.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
 
 *演示视频：位运算表达式 `x & -x` 的完整推演过程*
 
 </div>
 
-> 💡 **提示**: 如果视频无法播放，请确保已登录 GitHub 账号，或尝试使用现代浏览器（Chrome/Firefox/Safari）。
+> 💡 **提示**: 
+> - 视频文件：3.8MB MP4 格式
+> - 如果无法播放，请刷新页面或清除浏览器缓存
 
 ### 界面预览
 
