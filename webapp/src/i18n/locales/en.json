@@ -1,0 +1,120 @@
+{
+  "app": {
+    "title": "Bitwise Logic HUD",
+    "subtitle": "Interactive Bitwise Operations Visualizer"
+  },
+  "settings": {
+    "title": "API Configuration",
+    "baseUrl": "API Base URL",
+    "baseUrlPlaceholder": "https://api.example.com/v1",
+    "apiKey": "API Key",
+    "apiKeyPlaceholder": "Enter your API key",
+    "modelName": "Model Name",
+    "modelNamePlaceholder": "gpt-4o-mini",
+    "modelNameHint": "Supported: gpt-4o, gpt-4o-mini, claude-3.5-sonnet, etc.",
+    "save": "Save",
+    "cancel": "Cancel",
+    "saved": "Settings saved",
+    "testConnection": "Test Connection",
+    "testing": "Testing...",
+    "testSuccess": "Connection successful! Auto-closing...",
+    "testFailed": "Connection failed. Please check your settings.",
+    "testMissingConfig": "Please fill in all fields"
+  },
+  "inputHub": {
+    "variables": "Variables",
+    "variableX": "Variable X",
+    "variableY": "Variable Y",
+    "expression": "Expression",
+    "expressionPlaceholder": "x*~y+uy*ux==-x",
+    "execute": "Execute",
+    "executing": "Executing...",
+    "astNodes": "AST Nodes",
+    "mockMode": "Mock Mode",
+    "apiMode": "API Mode"
+  },
+  "binaryMatrix": {
+    "mode8bit": "8-bit",
+    "mode32bit": "32-bit",
+    "step": "Step",
+    "of": "of",
+    "previous": "Previous",
+    "next": "Next",
+    "reset": "Reset",
+    "play": "Play",
+    "pause": "Pause",
+    "operation": "Operation",
+    "explanation": "Explanation",
+    "ruleCitation": "Rule Citation",
+    "result": "Result",
+    "bits": "Bits",
+    "changedBits": "Changed Bits",
+    "unchangedBits": "Unchanged Bits",
+    "noData": "Execute an expression to begin",
+    "execute": "Execute"
+  },
+  "cotInterpreter": {
+    "title": "Chain of Thought",
+    "step": "Step",
+    "operation": "Operation",
+    "expression": "Expression",
+    "explanation": "Explanation",
+    "operands": "Operands",
+    "result": "Result"
+  },
+  "theoryCards": {
+    "title": "Theory Reference",
+    "and": {
+      "name": "AND Operation",
+      "formula": "A ∧ B",
+      "description": "Returns 1 only if both bits are 1"
+    },
+    "or": {
+      "name": "OR Operation",
+      "formula": "A ∨ B",
+      "description": "Returns 1 if at least one bit is 1"
+    },
+    "not": {
+      "name": "NOT Operation",
+      "formula": "¬A",
+      "description": "Inverts all bits (0→1, 1→0)"
+    },
+    "xor": {
+      "name": "XOR Operation",
+      "formula": "A ⊕ B",
+      "description": "Returns 1 if bits are different"
+    },
+    "nand": {
+      "name": "NAND Operation",
+      "formula": "¬(A ∧ B)",
+      "description": "NOT of AND operation"
+    },
+    "nor": {
+      "name": "NOR Operation",
+      "formula": "¬(A ∨ B)",
+      "description": "NOT of OR operation"
+    },
+    "default": {
+      "name": "Bitwise Operation",
+      "formula": "OP(A, B)",
+      "description": "Binary operation on bit patterns"
+    }
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "decimal": "Decimal",
+    "binary": "Binary",
+    "name": "Name"
+  },
+  "errors": {
+    "apiCallFailed": "API call failed",
+    "invalidResponse": "Invalid response from server",
+    "missingConfig": "Please configure API settings first",
+    "networkError": "Network error",
+    "invalidExpression": "Please enter a valid expression",
+    "missingApiConfig": "API not configured, using mock data",
+    "unknownError": "Unknown error occurred"
+  }
+}

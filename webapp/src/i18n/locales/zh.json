@@ -1,0 +1,120 @@
+{
+  "app": {
+    "title": "位运算逻辑 HUD",
+    "subtitle": "交互式位运算可视化器"
+  },
+  "settings": {
+    "title": "API 配置",
+    "baseUrl": "API 基础地址",
+    "baseUrlPlaceholder": "https://api.example.com/v1",
+    "apiKey": "API 密钥",
+    "apiKeyPlaceholder": "请输入您的 API 密钥",
+    "modelName": "模型名称",
+    "modelNamePlaceholder": "gpt-4o-mini",
+    "modelNameHint": "支持：gpt-4o, gpt-4o-mini, claude-3.5-sonnet 等",
+    "save": "保存",
+    "cancel": "取消",
+    "saved": "设置已保存",
+    "testConnection": "测试连接",
+    "testing": "测试中...",
+    "testSuccess": "连接成功！自动关闭中...",
+    "testFailed": "连接失败，请检查设置",
+    "testMissingConfig": "请填写所有必填项"
+  },
+  "inputHub": {
+    "variables": "变量",
+    "variableX": "变量 X",
+    "variableY": "变量 Y",
+    "expression": "表达式",
+    "expressionPlaceholder": "x*~y+uy*ux==-x",
+    "execute": "执行",
+    "executing": "执行中...",
+    "astNodes": "抽象语法树节点",
+    "mockMode": "模拟模式",
+    "apiMode": "API 模式"
+  },
+  "binaryMatrix": {
+    "mode8bit": "8 位",
+    "mode32bit": "32 位",
+    "step": "步骤",
+    "of": "共",
+    "previous": "上一步",
+    "next": "下一步",
+    "reset": "重置",
+    "play": "播放",
+    "pause": "暂停",
+    "operation": "运算",
+    "explanation": "解释",
+    "ruleCitation": "规则引用",
+    "result": "结果",
+    "bits": "位",
+    "changedBits": "变化位",
+    "unchangedBits": "未变化位",
+    "noData": "执行表达式以开始",
+    "execute": "执行"
+  },
+  "cotInterpreter": {
+    "title": "思维链解析",
+    "step": "步骤",
+    "operation": "运算",
+    "expression": "表达式",
+    "explanation": "解释",
+    "operands": "操作数",
+    "result": "结果"
+  },
+  "theoryCards": {
+    "title": "理论参考",
+    "and": {
+      "name": "与运算",
+      "formula": "A ∧ B",
+      "description": "仅当两个位都为 1 时返回 1"
+    },
+    "or": {
+      "name": "或运算",
+      "formula": "A ∨ B",
+      "description": "至少一个位为 1 时返回 1"
+    },
+    "not": {
+      "name": "非运算",
+      "formula": "¬A",
+      "description": "反转所有位 (0→1, 1→0)"
+    },
+    "xor": {
+      "name": "异或运算",
+      "formula": "A ⊕ B",
+      "description": "位不同时返回 1"
+    },
+    "nand": {
+      "name": "与非运算",
+      "formula": "¬(A ∧ B)",
+      "description": "与运算的否定"
+    },
+    "nor": {
+      "name": "或非运算",
+      "formula": "¬(A ∨ B)",
+      "description": "或运算的否定"
+    },
+    "default": {
+      "name": "位运算",
+      "formula": "OP(A, B)",
+      "description": "对位模式的二元运算"
+    }
+  },
+  "common": {
+    "loading": "加载中...",
+    "error": "错误",
+    "success": "成功",
+    "decimal": "十进制",
+    "binary": "二进制",
+    "name": "名称"
+  },
+  "errors": {
+    "apiCallFailed": "API 调用失败",
+    "invalidResponse": "服务器响应无效",
+    "missingConfig": "请先配置 API 设置",
+    "networkError": "网络错误",
+    "invalidExpression": "请输入有效的表达式",
+    "missingApiConfig": "API 未配置，使用模拟数据",
+    "unknownError": "发生未知错误"
+  }
+}
