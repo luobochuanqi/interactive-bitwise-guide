@@ -519,7 +519,6 @@ MIT License - 详见 [LICENSE](LICENSE) 文件
 - [Tailwind CSS](https://tailwindcss.com/) - 实用优先的 CSS 框架
 - [VueUse](https://vueuse.org/) - Vue Composition API 工具集
 - [Vue I18n](https://vue-i18n.intlify.dev/) - Vue 国际化插件
-- [OpenRouter](https://openrouter.ai/) - 统一 AI API 平台
 
 ---
 

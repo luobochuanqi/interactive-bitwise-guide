@@ -9,6 +9,17 @@ export function useBitwiseEngine(initialData?: BitwiseResponse) {
   const playInterval = ref<ReturnType<typeof setInterval> | null>(null)
   const data = ref<BitwiseResponse | null>(initialData || null)
 
+  // 监听 initialData 变化（当作为 prop 传入时）
+  watch(
+    () => initialData,
+    (newData) => {
+      if (newData) {
+        setData(newData)
+      }
+    },
+    { immediate: false }
+  )
+
   const steps = computed(() => data.value?.steps || [])
   const currentStep = computed(() => steps.value[currentStepIndex.value] || null)
   const prevStep = computed(() => {
