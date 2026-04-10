@@ -100,6 +100,17 @@
       "description": "Binary operation on bit patterns"
     }
   },
+  "astTree": {
+    "title": "AST Visualization",
+    "nodes": "nodes",
+    "operator": "Operator",
+    "operand": "Operand",
+    "noData": "No AST data",
+    "executeHint": "Execute expression to visualize",
+    "expression": "Expression",
+    "noExpression": "No expression",
+    "resetView": "Reset View"
+  },
   "common": {
     "loading": "Loading...",
     "error": "Error",

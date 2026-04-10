@@ -56,6 +56,7 @@ export function useBitwiseSession() {
 
   const currentData = ref<BitwiseResponse | null>(null)
   const astNodes = ref<string[]>([])
+  const ast = computed(() => currentData.value?.ast || null)
   const currentStepIndex = ref(0)
   const isPlaying = ref(false)
 
@@ -119,6 +120,12 @@ export function useBitwiseSession() {
         astNodes.value = mockData.ast_nodes || []
         state.useMockData = true
         
+        console.log('[BitwiseSession] Mock data loaded:', {
+          ast: mockData.ast ? '✓ Structured AST' : '✗ No AST',
+          astNodes: mockData.ast_nodes?.length || 0,
+          steps: mockData.steps.length
+        })
+        
         return { success: true, data: mockData }
       } else {
         // API 配置完整，使用真实 API
@@ -141,7 +148,8 @@ export function useBitwiseSession() {
           console.log('[BitwiseSession] 📥 API response received:', {
             expression: data.expression,
             steps: data.steps.length,
-            astNodes: data.ast_nodes?.length || 0
+            astNodes: data.ast_nodes?.length || 0,
+            ast: data.ast ? '✓ Structured' : '✗ Not provided'
           })
           
           currentData.value = data
@@ -222,6 +230,10 @@ export function useBitwiseSession() {
     state.error = null
     currentStepIndex.value = 0
   }
+  
+  function getAst() {
+    return ast.value
+  }
 
   function fullReset() {
     clearData()
@@ -234,6 +246,7 @@ export function useBitwiseSession() {
     state,
     currentData,
     astNodes,
+    ast,
     currentStepIndex,
     isPlaying,
     canGoPrevious,
@@ -253,6 +266,7 @@ export function useBitwiseSession() {
     toggleMockMode,
     setApiConfig,
     clearData,
-    fullReset
+    fullReset,
+    getAst
   }
 }

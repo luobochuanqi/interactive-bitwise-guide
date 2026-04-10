@@ -1,5 +1,5 @@
 import { useStorage } from '@vueuse/core'
-import type { BitwiseResponse } from '../types/bitwise'
+import type { BitwiseResponse, ASTNode } from '../types/bitwise'
 
 export const STORAGE_KEYS = {
   API_BASE_URL: 'bitwise_api_base_url',
@@ -17,6 +17,24 @@ interface Operand {
   binary: string;
 }
 
+interface ASTNode {
+  id: string;
+  type: "operator" | "operand";
+  value: string;
+  level?: number;
+  parentId?: string | null;
+  childrenIds?: string[];
+  left?: ASTNode;
+  right?: ASTNode;
+  metadata?: {
+    operator?: string;
+    operandName?: string;
+    decimal?: number;
+    binary?: string;
+    description?: string;
+  };
+}
+
 interface OperationStep {
   step_id: number;
   operation_name: string;
@@ -30,12 +48,42 @@ interface OperationStep {
 
 interface BitwiseResponse {
   expression: string;
-  ast_nodes: string[];
+  ast: ASTNode;
   steps: OperationStep[];
 }
 
+IMPORTANT AST Requirements:
+1. Return a complete binary tree structure using "left" and "right" child properties
+2. For unary operators (~), only use "left" child
+3. For binary operators (&, |, ^, <<, >>), use both "left" and "right" children
+4. Operands (variables like x, y) have no children
+5. Each node must have a unique "id" (e.g., "node-1", "node-2")
+6. Include metadata with operator names and decimal/binary values for operands
+
+Example for "x & y":
+{
+  "ast": {
+    "id": "node-1",
+    "type": "operator",
+    "value": "&",
+    "metadata": {"operator": "AND"},
+    "left": {
+      "id": "node-2",
+      "type": "operand",
+      "value": "x",
+      "metadata": {"operandName": "x", "decimal": 42, "binary": "00101010"}
+    },
+    "right": {
+      "id": "node-3",
+      "type": "operand",
+      "value": "y",
+      "metadata": {"operandName": "y", "decimal": 27, "binary": "00011011"}
+    }
+  }
+}
+
 Return ONLY valid JSON. No markdown, no explanations outside the JSON structure.
-IMPORTANT: All text fields (operation_name, explanation, rule_citation) must be in ENGLISH.`,
+IMPORTANT: All text fields (operation_name, explanation, rule_citation, description) must be in ENGLISH.`,
 
   zh: `You are a bitwise operations expert. Analyze the expression and return a JSON response matching this exact interface:
 
@@ -45,6 +93,24 @@ interface Operand {
   binary: string;
 }
 
+interface ASTNode {
+  id: string;
+  type: "operator" | "operand";
+  value: string;
+  level?: number;
+  parentId?: string | null;
+  childrenIds?: string[];
+  left?: ASTNode;
+  right?: ASTNode;
+  metadata?: {
+    operator?: string;
+    operandName?: string;
+    decimal?: number;
+    binary?: string;
+    description?: string;
+  };
+}
+
 interface OperationStep {
   step_id: number;
   operation_name: string;
@@ -58,12 +124,42 @@ interface OperationStep {
 
 interface BitwiseResponse {
   expression: string;
-  ast_nodes: string[];
+  ast: ASTNode;
   steps: OperationStep[];
 }
 
+IMPORTANT AST Requirements:
+1. Return a complete binary tree structure using "left" and "right" child properties
+2. For unary operators (~), only use "left" child
+3. For binary operators (&, |, ^, <<, >>), use both "left" and "right" children
+4. Operands (variables like x, y) have no children
+5. Each node must have a unique "id" (e.g., "node-1", "node-2")
+6. Include metadata with operator names and decimal/binary values for operands
+
+Example for "x & y":
+{
+  "ast": {
+    "id": "node-1",
+    "type": "operator",
+    "value": "&",
+    "metadata": {"operator": "AND"},
+    "left": {
+      "id": "node-2",
+      "type": "operand",
+      "value": "x",
+      "metadata": {"operandName": "x", "decimal": 42, "binary": "00101010"}
+    },
+    "right": {
+      "id": "node-3",
+      "type": "operand",
+      "value": "y",
+      "metadata": {"operandName": "y", "decimal": 27, "binary": "00011011"}
+    }
+  }
+}
+
 Return ONLY valid JSON. No markdown, no explanations outside the JSON structure.
-IMPORTANT: All text fields (operation_name, explanation, rule_citation) must be in SIMPLIFIED CHINESE.`
+IMPORTANT: All text fields (operation_name, explanation, rule_citation, description) must be in SIMPLIFIED CHINESE.`
 } as const
 
 export interface ApiConfig {
@@ -108,13 +204,42 @@ function logError(...args: any[]) {
   console.error(`\x1b[31m[Bitwise HUD ${timestamp}]\x1b[0m`, ...args)
 }
 
+function validateASTNode(node: unknown): node is ASTNode {
+  if (typeof node !== 'object' || node === null) return false
+  const n = node as Record<string, unknown>
+  
+  if (typeof n.id !== 'string') return false
+  if (typeof n.type !== 'string' || !['operator', 'operand'].includes(n.type)) return false
+  if (typeof n.value !== 'string') return false
+  
+  // 验证 left/right 子节点（递归）
+  if (n.left !== undefined && n.left !== null) {
+    if (!validateASTNode(n.left)) return false
+  }
+  if (n.right !== undefined && n.right !== null) {
+    if (!validateASTNode(n.right)) return false
+  }
+  
+  return true
+}
+
 function validateResponse(data: unknown): data is BitwiseResponse {
   if (typeof data !== 'object' || data === null) return false
   
   const response = data as Record<string, unknown>
   if (!('expression' in response) || typeof response.expression !== 'string') return false
-  if (!('ast_nodes' in response) || !Array.isArray(response.ast_nodes)) return false
   if (!('steps' in response) || !Array.isArray(response.steps)) return false
+  
+  // 验证 AST：支持新格式 (ast) 和旧格式 (ast_nodes) 向后兼容
+  const hasNewFormat = 'ast' in response && response.ast !== null && typeof response.ast === 'object'
+  const hasOldFormat = 'ast_nodes' in response && Array.isArray(response.ast_nodes)
+  
+  if (!hasNewFormat && !hasOldFormat) return false
+  
+  // 验证新格式的 AST 结构
+  if (hasNewFormat) {
+    if (!validateASTNode(response.ast)) return false
+  }
   
   for (const step of response.steps) {
     if (typeof step !== 'object' || step === null) return false

@@ -5,11 +5,15 @@ import ASTTree from './ASTTree.vue'
 
 const { t } = useI18n()
 
+import type { ASTNode } from '../types/bitwise'
+
 interface Props {
   apiBaseURL: string
   apiKey: string
   useMockData?: boolean
   isLoading?: boolean
+  astNodes?: string[]
+  ast?: ASTNode | null
 }
 
 interface Emits {
@@ -181,7 +185,7 @@ const handleExecute = () => {
         <span class="text-zinc-500 text-[10px]">AST</span>
       </div>
       <div class="flex-1 overflow-auto">
-        <ASTTree :expression="expression" />
+        <ASTTree :expression="expression" :astNodes="astNodes || []" :ast="ast || null" />
       </div>
     </div>
   </div>

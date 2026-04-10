@@ -1,8 +1,77 @@
-import type { BitwiseResponse } from '../types/bitwise'
+import type { BitwiseResponse, ASTNode } from '../types/bitwise'
+
+// 辅助函数：创建 AST 节点
+function createOperatorNode(
+  id: string,
+  value: string,
+  operatorName: string,
+  left: ASTNode | null = null,
+  right: ASTNode | null = null
+): ASTNode {
+  const node: ASTNode = {
+    id,
+    type: 'operator',
+    value,
+    metadata: {
+      operator: operatorName
+    }
+  }
+  if (left) node.left = left
+  if (right) node.right = right
+  return node
+}
+
+function createOperandNode(
+  id: string,
+  value: string,
+  name: string,
+  decimal: number
+): ASTNode {
+  return {
+    id,
+    type: 'operand',
+    value,
+    metadata: {
+      operandName: name,
+      decimal,
+      binary: (decimal >>> 0).toString(2).padStart(8, '0')
+    }
+  }
+}
 
 export const mockBitwiseData: BitwiseResponse = {
   expression: 'x & y | ~x',
-  ast_nodes: ['&', '|', '~', 'x', 'y'],
+  // 新格式：结构化 AST
+  ast: {
+    id: 'node-1',
+    type: 'operator',
+    value: '|',
+    metadata: {
+      operator: 'OR',
+      description: '按位或运算'
+    },
+    left: {
+      id: 'node-2',
+      type: 'operator',
+      value: '&',
+      metadata: {
+        operator: 'AND'
+      },
+      left: createOperandNode('node-4', 'x', 'x', 42),
+      right: createOperandNode('node-5', 'y', 'y', 27)
+    },
+    right: {
+      id: 'node-3',
+      type: 'operator',
+      value: '~',
+      metadata: {
+        operator: 'NOT'
+      },
+      left: createOperandNode('node-6', 'x', 'x', 42)
+    }
+  },
+  // 旧格式：向后兼容
+  ast_nodes: ['|', '&', '~', 'x', 'y', 'x'],
   steps: [
     {
       step_id: 0,
@@ -104,7 +173,35 @@ export const mockBitwiseData: BitwiseResponse = {
 
 export const mock32BitData: BitwiseResponse = {
   expression: 'x ^ y & ~x',
-  ast_nodes: ['^', '&', '~', 'x', 'y'],
+  ast: {
+    id: 'root-1',
+    type: 'operator',
+    value: '^',
+    metadata: {
+      operator: 'XOR',
+      description: '按位异或运算'
+    },
+    left: createOperandNode('node-2', 'x', 'x', 255),
+    right: {
+      id: 'node-3',
+      type: 'operator',
+      value: '&',
+      metadata: {
+        operator: 'AND'
+      },
+      left: createOperandNode('node-4', 'y', 'y', 15),
+      right: {
+        id: 'node-5',
+        type: 'operator',
+        value: '~',
+        metadata: {
+          operator: 'NOT'
+        },
+        left: createOperandNode('node-6', 'x', 'x', 255)
+      }
+    }
+  },
+  ast_nodes: ['^', '&', '~', 'x', 'y', 'x'],
   steps: [
     {
       step_id: 0,
@@ -200,6 +297,46 @@ export const mock32BitData: BitwiseResponse = {
         binary: '00000000000000000000000011111111'
       },
       highlight_bits: []
+    }
+  ]
+}
+
+// 简单表达式的 AST 示例
+export const mockSimpleAndData: BitwiseResponse = {
+  expression: 'x & y',
+  ast: createOperatorNode(
+    'root-1',
+    '&',
+    'AND',
+    createOperandNode('node-2', 'x', 'x', 42),
+    createOperandNode('node-3', 'y', 'y', 27)
+  ),
+  ast_nodes: ['&', 'x', 'y'],
+  steps: [
+    {
+      step_id: 0,
+      operation_name: '按位与运算',
+      expression_part: 'x & y',
+      explanation: '对 x 和 y 进行按位与运算，只有两个位都为 1 时结果才为 1',
+      rule_citation: '与运算规则：a & b = 1 当且仅当 a=1 且 b=1',
+      operands: [
+        {
+          name: 'x',
+          decimal: 42,
+          binary: '00101010'
+        },
+        {
+          name: 'y',
+          decimal: 27,
+          binary: '00011011'
+        }
+      ],
+      result: {
+        name: 'x & y',
+        decimal: 10,
+        binary: '00001010'
+      },
+      highlight_bits: [1, 3, 5]
     }
   ]
 }

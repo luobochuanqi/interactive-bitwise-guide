@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { ref, watch, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { setUserLanguage } from './services/api'
 import SettingsPanel from './components/SettingsPanel.vue'
@@ -26,6 +26,7 @@ const isSettingsOpen = ref(false)
 const {
   state,
   currentData,
+  astNodes,
   currentStepIndex,
   isPlaying,
   canGoPrevious,
@@ -37,6 +38,9 @@ const {
   togglePlayback,
   setApiConfig
 } = useBitwiseSession()
+
+// 从 currentData 获取结构化 AST
+const ast = computed(() => currentData.value?.ast || null)
 
 const openSettings = () => {
   isSettingsOpen.value = true
@@ -116,6 +120,8 @@ const handleModelNameUpdate = (value: string) => {
           :apiKey="state.apiKey"
           :useMockData="state.useMockData"
           :isLoading="state.isLoading"
+          :astNodes="astNodes"
+          :ast="ast"
           v-model:expression="state.expression"
           v-model:x="state.x"
           v-model:y="state.y"

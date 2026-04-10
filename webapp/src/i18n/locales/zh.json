@@ -100,6 +100,17 @@
       "description": "对位模式的二元运算"
     }
   },
+  "astTree": {
+    "title": "AST 可视化",
+    "nodes": "个节点",
+    "operator": "运算符",
+    "operand": "操作数",
+    "noData": "暂无 AST 数据",
+    "executeHint": "执行表达式以开始可视化",
+    "expression": "表达式",
+    "noExpression": "无表达式",
+    "resetView": "重置视图"
+  },
   "common": {
     "loading": "加载中...",
     "error": "错误",
